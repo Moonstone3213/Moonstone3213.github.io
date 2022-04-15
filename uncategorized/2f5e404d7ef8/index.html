@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://blog.iwoov.com/img/220415.jpg">
 <meta property="article:published_time" content="2021-04-15T09:35:34.000Z">
-<meta property="article:modified_time" content="2022-04-15T17:03:29.702Z">
+<meta property="article:modified_time" content="2022-04-15T17:04:10.252Z">
 <meta property="article:author" content="Wu Yun">
 <meta property="article:tag" content="Emby">
 <meta property="article:tag" content="网盘挂载*">
@@ -306,7 +306,7 @@
             
             <div class="markdown-body">
               
-              <h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a><strong>前言</strong></h5><hr>
+              <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a><strong>前言</strong></h3><hr>
 <p>一般我们玩<font color="#dd0000"><code>Plex</code></font>、<font color="#dd0000"><code>Emby</code></font>、<font color="#dd0000"><code>Jellyfin</code></font>这些媒体服务器的时候，都会考虑到硬盘大小的问题。如果考虑到成本的话，那就只能挂载无限网盘了，这里就建议用<code>Google Drive</code>，目前在土耳其区购买仅需50元。挂载方法的话可以用<code>Plexdrive</code>和<code>Rclone</code>。</p>
 <p><font color="#dd0000"><code>Plexdrive</code></font>是一个可以安装<code>Gdrive</code>应用的工具，看名字像是为<code>Plex</code>量身打造，其实其它应用也可以用，该工具可以直接从<code>Gdrive</code>读取媒体文件，专门争对媒体服务器优化，貌似是利用内存缓存原理，可以加快媒体访问并减少<code>API</code>的读取次数。但是需要比较大的内存。</p>
 <p><font color="#dd0000"><code>Rclone</code></font>是一个强大的网盘挂载工具，很久前博主就经常介绍，不过考虑到用途，之前的挂载参数肯定是需要调整下的，所以会在这里单独说下，该工具目前也有适合媒体服务器的缓存读取功能，但缓存很容易占用本地硬盘空间，所以这里博主就不用缓存功能了，主要使用的是分段读取，读取会快点，对于<code>API</code>来说，读取次数也会变的非常少。</p>
