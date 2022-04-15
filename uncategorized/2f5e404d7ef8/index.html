@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.svg">
+  <link rel="icon" href="/img/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -16,19 +16,19 @@
   <meta name="author" content="Wu Yun">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Plexdrive和rclone挂载无限空间的谷歌云盘搭建Emby">
+    <meta name="description" content="Plexdrive和Rclone挂载无限空间的谷歌云盘搭建Emby">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用Plexdrive&#x2F;Rclone+Google Drive搭建无限容量的Emby媒体库">
-<meta property="og:url" content="https://blog.iwoov.com/2021/04/15/%E4%BD%BF%E7%94%A8Plexdrive-Rclone-Google-Drive%E6%90%AD%E5%BB%BA%E6%97%A0%E9%99%90%E5%AE%B9%E9%87%8F%E7%9A%84Emby%E5%AA%92%E4%BD%93%E5%BA%93/index.html">
+<meta property="og:url" content="https://blog.iwoov.com/uncategorized/2f5e404d7ef8/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="Plexdrive和rclone挂载无限空间的谷歌云盘搭建Emby">
+<meta property="og:description" content="Plexdrive和Rclone挂载无限空间的谷歌云盘搭建Emby">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://blog.iwoov.com/img/220415.jpg">
 <meta property="article:published_time" content="2021-04-15T09:35:34.000Z">
-<meta property="article:modified_time" content="2022-04-15T12:10:12.817Z">
+<meta property="article:modified_time" content="2022-04-15T17:03:29.702Z">
 <meta property="article:author" content="Wu Yun">
-<meta property="article:tag" content="emby">
-<meta property="article:tag" content="网盘挂载">
+<meta property="article:tag" content="Emby">
+<meta property="article:tag" content="网盘挂载*">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://blog.iwoov.com/img/220415.jpg">
   
@@ -111,6 +111,46 @@
                 <i class="iconfont icon-home-fill"></i>
                 首页
               </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont iconfont icon-rss"></i>
+                网站
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://emby.iwoov.com/">
+                    
+                    我的Emby
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://cloud.iwoov.com/admin#/login/">
+                    
+                    我的机场
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://monitor.iwoov.com/">
+                    
+                    我的服务器
+                  </a>
+                
+              </div>
             </li>
           
         
@@ -213,7 +253,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.6k 字
+          4.3k 字
         
       </span>
     
@@ -224,7 +264,7 @@
         
         
         
-          31 分钟
+          37 分钟
         
       </span>
     
@@ -266,22 +306,21 @@
             
             <div class="markdown-body">
               
-              <p><strong>说明：</strong>一般我们玩<font color="#dd0000"><code>Plex</code></font>、<font color="#dd0000"><code>Emby</code></font>、<font color="#dd0000"><code>Jellyfin</code></font>这些媒体服务器的时候，都会考虑到硬盘大小的问题。如果考虑到成本的话，那就只能挂载无限网盘了，这里就建议用<code>Google Drive</code>，目前在土耳其区购买仅需50元。挂载方法的话可以用<code>Plexdrive</code>和<code>Rclone</code>。</p>
+              <h5 id="前言"><a href="#前言" class="headerlink" title="前言"></a><strong>前言</strong></h5><hr>
+<p>一般我们玩<font color="#dd0000"><code>Plex</code></font>、<font color="#dd0000"><code>Emby</code></font>、<font color="#dd0000"><code>Jellyfin</code></font>这些媒体服务器的时候，都会考虑到硬盘大小的问题。如果考虑到成本的话，那就只能挂载无限网盘了，这里就建议用<code>Google Drive</code>，目前在土耳其区购买仅需50元。挂载方法的话可以用<code>Plexdrive</code>和<code>Rclone</code>。</p>
 <p><font color="#dd0000"><code>Plexdrive</code></font>是一个可以安装<code>Gdrive</code>应用的工具，看名字像是为<code>Plex</code>量身打造，其实其它应用也可以用，该工具可以直接从<code>Gdrive</code>读取媒体文件，专门争对媒体服务器优化，貌似是利用内存缓存原理，可以加快媒体访问并减少<code>API</code>的读取次数。但是需要比较大的内存。</p>
 <p><font color="#dd0000"><code>Rclone</code></font>是一个强大的网盘挂载工具，很久前博主就经常介绍，不过考虑到用途，之前的挂载参数肯定是需要调整下的，所以会在这里单独说下，该工具目前也有适合媒体服务器的缓存读取功能，但缓存很容易占用本地硬盘空间，所以这里博主就不用缓存功能了，主要使用的是分段读取，读取会快点，对于<code>API</code>来说，读取次数也会变的非常少。</p>
 <h5 id="两个工具的读取区别"><a href="#两个工具的读取区别" class="headerlink" title="两个工具的读取区别"></a>两个工具的读取区别</h5><p> <font color="#dd0000"><code>Plexdrive</code></font>：只能读取和删除</p>
 <p> <font color="#dd0000"><code>Rclone</code></font>：可以写入、读取和删除，但不能当硬盘直接写入，只能将文件移动进去</p>
 <p>这<code>2</code>个工具都需要安装<code>fuse</code>，可以提前装下，使用命令：</p>
-<div class="code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">Debian/Ubuntu系统</span>
+<div class="code-wrapper"><pre><code class="hljs Bash"><span class="hljs-comment">#Debian/Ubuntu系统</span>
 apt-get install fuse -y
-<span class="hljs-meta prompt_">#</span><span class="language-bash">CentOS系统</span>
+<span class="hljs-comment">#CentOS系统</span>
 yum install fuse -y</code></pre></div>
 
-
-
-<h3 id="使用Plexdrive"><a href="#使用Plexdrive" class="headerlink" title="使用Plexdrive"></a>使用Plexdrive</h3><p><strong>Github地址：</strong><a target="_blank" rel="noopener" href="https://github.com/dweidenfeld/plexdrive">https://github.com/dweidenfeld/plexdrive</a></p>
-<p><strong>1、获取谷歌API凭据</strong></p>
-<p>获得自己的客户端<code>ID</code>和客户端密钥</p>
+<hr>
+<h3 id="使用Plexdrive"><a href="#使用Plexdrive" class="headerlink" title="使用Plexdrive"></a>使用Plexdrive</h3><p><strong>Github地址：→ <a target="_blank" rel="noopener" href="https://github.com/dweidenfeld/plexdrive/">传送门</a></strong></p>
+<h5 id="1、获取谷歌API凭据"><a href="#1、获取谷歌API凭据" class="headerlink" title="1、获取谷歌API凭据"></a><strong>1、获取谷歌API凭据</strong></h5><p>获得自己的客户端<code>ID</code>和客户端密钥</p>
 <div class="code-wrapper"><pre><code class="hljs markdown">客户端 ID
 540168500500-<span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">**<span class="hljs-emphasis">*.apps.googleusercontent.com</span></span>
 <span class="hljs-emphasis"><span class="hljs-strong">客户端密钥</span></span>
@@ -291,16 +330,15 @@ yum install fuse -y</code></pre></div>
 
 
 
-<p><strong>2、运行Plexdrive</strong></p>
-<p><code>Plexdrive</code>下载地址→<a target="_blank" rel="noopener" href="https://github.com/dweidenfeld/plexdrive/releases">传送门</a>，根据自己的架构选择对应的版本。</p>
-<div class="code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">下载最新的Plexdrive</span>
+<h5 id="2、运行Plexdrive"><a href="#2、运行Plexdrive" class="headerlink" title="2、运行Plexdrive"></a><strong>2、运行Plexdrive</strong></h5><p><code>Plexdrive</code>下载地址→ <a target="_blank" rel="noopener" href="https://github.com/dweidenfeld/plexdrive/releases">传送门</a>，根据自己的架构选择对应的版本。</p>
+<div class="code-wrapper"><pre><code class="hljs Bash"><span class="hljs-comment">#下载最新的Plexdrive</span>
 wget https://github.com/dweidenfeld/plexdrive/releases/download/5.0.0/plexdrive-linux-amd64
-<span class="hljs-meta prompt_">#</span><span class="language-bash">移动并命名</span>
-mv plexdrive-linux-amd64 /usr/local/bin/plexdrive
-chmod +x /usr/local/bin/plexdrive
-<span class="hljs-meta prompt_">#</span><span class="language-bash">新建本地挂载目录</span>
-mkdir -p /home/gdrive
-<span class="hljs-meta prompt_">#</span><span class="language-bash">开始挂载</span>
+<span class="hljs-comment">#移动并命名</span>
+<span class="hljs-built_in">mv</span> plexdrive-linux-amd64 /usr/local/bin/plexdrive
+<span class="hljs-built_in">chmod</span> +x /usr/local/bin/plexdrive
+<span class="hljs-comment">#新建本地挂载目录</span>
+<span class="hljs-built_in">mkdir</span> -p /home/gdrive
+<span class="hljs-comment">#开始挂载</span>
 /usr/local/bin/plexdrive mount \
  -c /root/.plexdrive \
  -o allow_other \
@@ -315,49 +353,48 @@ mkdir -p /home/gdrive
 <p>挂载参数可以参考→<a target="_blank" rel="noopener" href="https://github.com/dweidenfeld/plexdrive#usage">传送门</a>，可以根据你的需求自行调整以上参数。</p>
 <p>挂载后会要你输入客户端<code>ID</code>和密匙，然后打开获取到的链接绑定账号后，将自己获取到的<code>code</code>复制到<code>SSH</code>客户端确定即可。</p>
 <p>然后接下来<code>Plexdrive</code>将开始生成缓存，所以期间我们需要等几分钟。缓存完了后，你会看到<code>Gdrive</code>的文件已经同步到了本地挂载文件夹。</p>
-<p><strong>3、开机自启</strong></p>
-<p>这里使用<code>Systemctl</code>守护进程，只适用于<code>CentOS 7</code>、<code>Debian 8+</code>、<code>Ubuntu 16+</code>。</p>
-<div class="code-wrapper"><pre><code class="hljs shell">cat &gt; /etc/systemd/system/plexdrive.service &lt;&lt;EOF
-[Unit]
-Description=Plexdrive
-AssertPathIsDirectory=/home/gdrive
-After=network-online.target
-
-[Service]
-Type=simple
-ExecStart=/usr/local/bin/plexdrive mount \
- -c /root/.plexdrive \
- -o allow_other \
- -v 4 --refresh-interval=1m \
- --chunk-check-threads=8 \
- --chunk-load-threads=8 \
- --chunk-load-ahead=4 \
- --max-chunks=100 \
- --drive-id=0ANsR2iUah42-Uk9PVA \
- /home/gdrive
-ExecStop=/bin/fusermount -u /home/gdrive
-Restart=on-abort
-
-[Install]
-WantedBy=default.target
-EOF</code></pre></div>
+<h5 id="3、开机自启"><a href="#3、开机自启" class="headerlink" title="3、开机自启"></a><strong>3、开机自启</strong></h5><p>这里使用<code>Systemctl</code>守护进程，只适用于<code>CentOS 7</code>、<code>Debian 8+</code>、<code>Ubuntu 16+</code>。</p>
+<div class="code-wrapper"><pre><code class="hljs Bash"><span class="hljs-built_in">cat</span> &gt; /etc/systemd/system/plexdrive.service &lt;&lt;<span class="hljs-string">EOF</span>
+<span class="hljs-string">[Unit]</span>
+<span class="hljs-string">Description=Plexdrive</span>
+<span class="hljs-string">AssertPathIsDirectory=/home/gdrive</span>
+<span class="hljs-string">After=network-online.target</span>
+<span class="hljs-string"></span>
+<span class="hljs-string">[Service]</span>
+<span class="hljs-string">Type=simple</span>
+<span class="hljs-string">ExecStart=/usr/local/bin/plexdrive mount \</span>
+<span class="hljs-string"> -c /root/.plexdrive \</span>
+<span class="hljs-string"> -o allow_other \</span>
+<span class="hljs-string"> -v 4 --refresh-interval=1m \</span>
+<span class="hljs-string"> --chunk-check-threads=8 \</span>
+<span class="hljs-string"> --chunk-load-threads=8 \</span>
+<span class="hljs-string"> --chunk-load-ahead=4 \</span>
+<span class="hljs-string"> --max-chunks=100 \</span>
+<span class="hljs-string"> --drive-id=0ANsR2iUah42-Uk9PVA \</span>
+<span class="hljs-string"> /home/gdrive</span>
+<span class="hljs-string">ExecStop=/bin/fusermount -u /home/gdrive</span>
+<span class="hljs-string">Restart=on-abort</span>
+<span class="hljs-string"></span>
+<span class="hljs-string">[Install]</span>
+<span class="hljs-string">WantedBy=default.target</span>
+<span class="hljs-string">EOF</span></code></pre></div>
 
 <p>开始启动：</p>
-<div class="code-wrapper"><pre><code class="hljs shell">systemctl start plexdrive</code></pre></div>
+<div class="code-wrapper"><pre><code class="hljs bash">systemctl start plexdrive</code></pre></div>
 
 <p>设置开机自启：</p>
-<div class="code-wrapper"><pre><code class="hljs shell">systemctl enable plexdrive</code></pre></div>
+<div class="code-wrapper"><pre><code class="hljs Bash">systemctl <span class="hljs-built_in">enable</span> plexdrive</code></pre></div>
 
 <p>其他命令：</p>
-<div class="code-wrapper"><pre><code class="hljs shell">重启：systemctl restart plexdrive
+<div class="code-wrapper"><pre><code class="hljs Bash">重启：systemctl restart plexdrive
 停止：systemctl stop plexdrive
 状态：systemctl status plexdrive</code></pre></div>
 
 
 
-<h3 id="使用Rclone"><a href="#使用Rclone" class="headerlink" title="使用Rclone"></a>使用Rclone</h3><p><strong>1、配置Rclone</strong><br>使用和挂载<code>Google Drive</code>的方法可以参考博主以前发的教程→<a target="_blank" rel="noopener" href="https://www.moerats.com/archives/481/">传送门</a>，但只参考教程安装和配置即可，挂载就看本文。</p>
-<p><strong>2、挂载Gdrive</strong><br>挂载需要<code>3</code>个主要参数，这里很多人容易搞混，就详细的说下，比如开头的参数如下：</p>
-<div class="code-wrapper"><pre><code class="hljs shell">/usr/bin/rclone mount DriveName:Folder LocalFolder</code></pre></div>
+<h3 id="使用Rclone"><a href="#使用Rclone" class="headerlink" title="使用Rclone"></a>使用Rclone</h3><h5 id="1、配置Rclone"><a href="#1、配置Rclone" class="headerlink" title="1、配置Rclone"></a><strong>1、配置Rclone</strong></h5><p>使用和挂载<code>Google Drive</code>的方法可以参考博主以前发的教程→ <a target="_blank" rel="noopener" href="https://www.moerats.com/archives/481/">传送门</a>，但只参考教程安装和配置即可，挂载就看本文。</p>
+<h5 id="2、挂载Gdrive"><a href="#2、挂载Gdrive" class="headerlink" title="2、挂载Gdrive"></a><strong>2、挂载Gdrive</strong></h5><p>挂载需要<code>3</code>个主要参数，这里很多人容易搞混，就详细的说下，比如开头的参数如下：</p>
+<div class="code-wrapper"><pre><code class="hljs Bash">/usr/bin/rclone mount DriveName:Folder LocalFolder</code></pre></div>
 
 <p>参数解读：</p>
 <div class="code-wrapper"><pre><code class="hljs awk">DriveName为Rclone的配置名称，比如你配置rclone的时候，Name填的Rats
@@ -365,9 +402,9 @@ Folder为网盘里的文件夹路径，如果你要挂载整个网盘，直接�
 LocalFolder为本地服务器上的挂载文件夹，如果你需要将网盘的文件夹挂载到服务器上的<span class="hljs-regexp">/Drive文件夹，那就填/</span>Drive</code></pre></div>
 
 <p>博主目前针对媒体服务器测试了个比较不错的挂载参数，命令：</p>
-<div class="code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">记得修改DriveName:Folder和LocalFolder的值</span>
+<div class="code-wrapper"><pre><code class="hljs Bash"><span class="hljs-comment">#记得修改DriveName:Folder和LocalFolder的值</span>
 /usr/bin/rclone mount DriveName:Folder LocalFolder \
- --umask 0000 \
+ --<span class="hljs-built_in">umask</span> 0000 \
  --default-permissions \
  --allow-non-empty \
  --allow-other \
@@ -376,46 +413,74 @@ LocalFolder为本地服务器上的挂载文件夹，如果你需要将网盘的
  --vfs-read-chunk-size 64M \
  --vfs-read-chunk-size-limit 1G</code></pre></div>
 
-<p>更多参数可以查看→<a target="_blank" rel="noopener" href="https://tip.rclone.org/commands/rclone_mount/#chunked-reading">地址一</a>和<a target="_blank" rel="noopener" href="https://rclone.org/commands/rclone_config/">地址二</a>，如果你喜欢折腾的话，可以测试下，看还有不有更适合的参数，然后留个言。</p>
-<p><strong>3、开机自启</strong><br>这里和<code>Plexdrive</code>一样，同样使用<code>Systemctl</code>守护进程，也只适用于<code>CentOS 7</code>、<code>Debian 8+</code>、<code>Ubuntu 16+</code>。</p>
-<div class="code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">以下是一整条命令，先修改DriveName:Folder和LocalFolder的值，再一起复制到SSH客户端运行</span>
-cat &gt; /etc/systemd/system/rclone.service &lt;&lt;EOF
-[Unit]
-Description=Rclone
-AssertPathIsDirectory=LocalFolder
-After=network-online.target
-
-[Service]
-Type=simple
-ExecStart=/usr/bin/rclone mount DriveName:Folder LocalFolder \
- --umask 0000 \
- --default-permissions \
- --allow-non-empty \
- --allow-other \
- --buffer-size 32M \
- --dir-cache-time 12h \
- --vfs-read-chunk-size 64M \
- --vfs-read-chunk-size-limit 1G
-ExecStop=/bin/fusermount -u LocalFolder
-Restart=on-abort
-User=root
-
-[Install]
-WantedBy=default.target
-EOF</code></pre></div>
+<p>更多参数可以查看→ <a target="_blank" rel="noopener" href="https://tip.rclone.org/commands/rclone_mount/#chunked-reading">地址一</a>和<a target="_blank" rel="noopener" href="https://rclone.org/commands/rclone_config/">地址二</a>，如果你喜欢折腾的话，可以测试下，看还有不有更适合的参数，然后留个言。</p>
+<h5 id="3、开机自启-1"><a href="#3、开机自启-1" class="headerlink" title="3、开机自启"></a><strong>3、开机自启</strong></h5><p>这里和<code>Plexdrive</code>一样，同样使用<code>Systemctl</code>守护进程，也只适用于<code>CentOS 7</code>、<code>Debian 8+</code>、<code>Ubuntu 16+</code>。</p>
+<div class="code-wrapper"><pre><code class="hljs Bash"><span class="hljs-comment">#以下是一整条命令，先修改DriveName:Folder和LocalFolder的值，再一起复制到SSH客户端运行</span>
+<span class="hljs-built_in">cat</span> &gt; /etc/systemd/system/rclone.service &lt;&lt;<span class="hljs-string">EOF</span>
+<span class="hljs-string">[Unit]</span>
+<span class="hljs-string">Description=Rclone</span>
+<span class="hljs-string">AssertPathIsDirectory=LocalFolder</span>
+<span class="hljs-string">After=network-online.target</span>
+<span class="hljs-string"></span>
+<span class="hljs-string">[Service]</span>
+<span class="hljs-string">Type=simple</span>
+<span class="hljs-string">ExecStart=/usr/bin/rclone mount DriveName:Folder LocalFolder \</span>
+<span class="hljs-string"> --umask 0000 \</span>
+<span class="hljs-string"> --default-permissions \</span>
+<span class="hljs-string"> --allow-non-empty \</span>
+<span class="hljs-string"> --allow-other \</span>
+<span class="hljs-string"> --buffer-size 32M \</span>
+<span class="hljs-string"> --dir-cache-time 12h \</span>
+<span class="hljs-string"> --vfs-read-chunk-size 64M \</span>
+<span class="hljs-string"> --vfs-read-chunk-size-limit 1G</span>
+<span class="hljs-string">ExecStop=/bin/fusermount -u LocalFolder</span>
+<span class="hljs-string">Restart=on-abort</span>
+<span class="hljs-string">User=root</span>
+<span class="hljs-string"></span>
+<span class="hljs-string">[Install]</span>
+<span class="hljs-string">WantedBy=default.target</span>
+<span class="hljs-string">EOF</span></code></pre></div>
 
 <p>开始启动：</p>
-<div class="code-wrapper"><pre><code class="hljs shell">systemctl start rclone</code></pre></div>
+<div class="code-wrapper"><pre><code class="hljs Bash">systemctl start rclone</code></pre></div>
 
 <p>设置开机自启：</p>
-<div class="code-wrapper"><pre><code class="hljs shell">systemctl enable rclone</code></pre></div>
+<div class="code-wrapper"><pre><code class="hljs Bash">systemctl <span class="hljs-built_in">enable</span> rclone</code></pre></div>
 
 <p>其他命令：</p>
-<div class="code-wrapper"><pre><code class="hljs shell">重启：systemctl restart rclone
+<div class="code-wrapper"><pre><code class="hljs Bash">重启：systemctl restart rclone
 停止：systemctl stop rclone
 状态：systemctl status rclone</code></pre></div>
 
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>现在<code>Plexdrive</code>项目好像很少更新了，不过还能用；至于<code>Rclone</code>的话，更新频繁，功能也强，所以博主还是偏向于<code>Rclone</code>的，不过博主体验了下下，貌似<code>Plexdrive</code>加载什么的更快些，当然也不能肯定<code>Plexdrive</code>要快，毕竟也可能与其它因素有关，对于这<code>2</code>个工具的选择，可以都体验下，觉得哪个适合自己就用那个。</p>
+
+
+<h3 id="安装Emby"><a href="#安装Emby" class="headerlink" title="安装Emby"></a>安装Emby</h3><h5 id="1、下载Emby-Server"><a href="#1、下载Emby-Server" class="headerlink" title="1、下载Emby Server"></a>1、下载Emby Server</h5><p>安装<code>Emby Server</code>的服务器配置选择最好在2核4G内存以上。我选择白嫖<code>Azure</code>，200美元一个月试用。可以开一台<code>F4s</code>，配置为4核8G，Debian11系统。因为是白嫖服务器，每天做好备份。下载地址→ <a target="_blank" rel="noopener" href="https://emby.media/download.html">传送门</a></p>
+<div class="code-wrapper"><pre><code class="hljs Bash">wget https://github.com/MediaBrowser/Emby.Releases/releases/download/4.6.7.0/emby-server-deb_4.6.7.0_amd64.deb</code></pre></div>
+
+
+
+<h5 id="2、安装Emby-Server"><a href="#2、安装Emby-Server" class="headerlink" title="2、安装Emby Server"></a>2、安装Emby Server</h5><p>用<code>dpkg</code>命令安装<code>.deb</code>包</p>
+<div class="code-wrapper"><pre><code class="hljs Bash">dpkg -i emby-server-deb_4.6.7.0_amd64.deb</code></pre></div>
+
+<p>卸载命令：</p>
+<div class="code-wrapper"><pre><code class="hljs Bash">dpkg -r --purge emby-server</code></pre></div>
+
+
+
+<h5 id="3、同步Emby配置文件"><a href="#3、同步Emby配置文件" class="headerlink" title="3、同步Emby配置文件"></a>3、同步Emby配置文件</h5><p>Emby的配置文件一般在<code>/var/lib/emby</code>目录下，因此将此目录下的所有文件备份同步即可</p>
+<p>备份并同步至我的谷歌云盘</p>
+<div class="code-wrapper"><pre><code class="hljs Bash">time=$(<span class="hljs-built_in">date</span> <span class="hljs-string">&quot;+%Y.%m.%d&quot;</span>)
+<span class="hljs-built_in">cd</span> /var/lib &amp;&amp; tar -zcvf /root/emby_<span class="hljs-variable">$time</span>.tar.gz emby/
+<span class="hljs-built_in">nohup</span> rclone move -v /root/emby_<span class="hljs-variable">$time</span>.tar.gz emby:/【07】资料/LInux/Azure --transfers=4 &gt;/dev/null 2&gt;&amp;1 &amp;</code></pre></div>
+
+<p>将谷歌网盘备份的Emby配置文件同步到本地</p>
+<div class="code-wrapper"><pre><code class="hljs bash">time=$(<span class="hljs-built_in">date</span> <span class="hljs-string">&quot;+%Y.%m.%d&quot;</span>)
+<span class="hljs-built_in">cp</span> /home/gd/【07】资料/LInux/Azure/emby_<span class="hljs-variable">$time</span>.tar.gz /var/lib
+tar -zxvf /var/lib/emby_<span class="hljs-variable">$time</span>.tar.gz -C /var/lib</code></pre></div>
+
+
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>现在<code>Plexdrive</code>项目好像很少更新了，不过还能用；至于<code>Rclone</code>的话，更新频繁，功能也强，所以博主还是偏向于<code>Rclone</code>的，不过博主体验了下下，貌似<code>Plexdrive</code>加载什么的更快些，当然也不能肯定<code>Plexdrive</code>要快，毕竟也可能与其它因素有关，对于这<code>2</code>个工具的选择，可以都体验下，觉得哪个适合自己就用那个。</p>
 
               
             </div>
@@ -423,34 +488,13 @@ EOF</code></pre></div>
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E5%A8%B1%E4%B9%90/" class="category-chain-item">娱乐</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
   
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/emby/">#emby</a>
+        <a href="/tags/Emby/">#Emby</a>
       
-        <a href="/tags/%E7%BD%91%E7%9B%98%E6%8C%82%E8%BD%BD/">#网盘挂载</a>
+        <a href="/tags/%E7%BD%91%E7%9B%98%E6%8C%82%E8%BD%BD/">#网盘挂载*</a>
       
     </div>
   
@@ -463,7 +507,7 @@ EOF</code></pre></div>
   <div class="license-box my-3">
     <div class="license-title">
       <div>使用Plexdrive/Rclone+Google Drive搭建无限容量的Emby媒体库</div>
-      <div>https://blog.iwoov.com/2021/04/15/使用Plexdrive-Rclone-Google-Drive搭建无限容量的Emby媒体库/</div>
+      <div>https://blog.iwoov.com/uncategorized/2f5e404d7ef8/</div>
     </div>
     <div class="license-meta">
       
@@ -505,12 +549,6 @@ EOF</code></pre></div>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/04/15/hello-world/" title="Hello World">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Hello World</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
@@ -523,23 +561,23 @@ EOF</code></pre></div>
             
   <article id="comments" lazyload>
     
-  <div id="twikoo"></div>
+  <div id="valine"></div>
   <script type="text/javascript">
-    Fluid.utils.loadComments('#comments', function() {
-      Fluid.utils.createScript('https://lib.baomitu.com/twikoo/1.4.17/twikoo.all.min.js', function() {
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.4.16/Valine.min.js', function() {
         var options = Object.assign(
-          {"envId":"blof-conments-5gz2omvo6f39cb87","region":"ap-shanghai","path":"window.location.pathname"},
+          {"appId":"iCNm0jTS52wIgY5w4yGmJYJI-MdYXbMMI","appKey":"NpKMdVDdmO89yX5iat7lxjFP","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
           {
-            el: '#twikoo',
-            path: 'window.location.pathname',
-            onCommentLoaded: function() {
-              var imgSelector = '#twikoo .tk-content img:not(.tk-owo-emotion)';
-              Fluid.plugins.imageCaption(imgSelector);
-              Fluid.plugins.fancyBox(imgSelector);
-            }
+            el: "#valine",
+            path: window.location.pathname
           }
         )
-        twikoo.init(options)
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
       });
     });
   </script>
