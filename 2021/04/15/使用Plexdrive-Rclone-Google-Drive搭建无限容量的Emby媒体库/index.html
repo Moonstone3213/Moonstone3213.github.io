@@ -1,0 +1,925 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wu Yun">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Plexdrive和rclone挂载无限空间的谷歌云盘搭建Emby">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Plexdrive&#x2F;Rclone+Google Drive搭建无限容量的Emby媒体库">
+<meta property="og:url" content="http://blog.iwoov.com/2021/04/15/%E4%BD%BF%E7%94%A8Plexdrive-Rclone-Google-Drive%E6%90%AD%E5%BB%BA%E6%97%A0%E9%99%90%E5%AE%B9%E9%87%8F%E7%9A%84Emby%E5%AA%92%E4%BD%93%E5%BA%93/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="Plexdrive和rclone挂载无限空间的谷歌云盘搭建Emby">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://blog.iwoov.com/img/220415.jpg">
+<meta property="article:published_time" content="2021-04-15T09:35:34.000Z">
+<meta property="article:modified_time" content="2022-04-15T12:10:12.817Z">
+<meta property="article:author" content="Wu Yun">
+<meta property="article:tag" content="emby">
+<meta property="article:tag" content="网盘挂载">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://blog.iwoov.com/img/220415.jpg">
+  
+  
+  <title>使用Plexdrive/Rclone+Google Drive搭建无限容量的Emby媒体库 - </title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.iwoov.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":"ture","baidu":"d666fe54c57cd1795ad4590f056ec0e1","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Wu Yun&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/220415.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="使用Plexdrive/Rclone+Google Drive搭建无限容量的Emby媒体库"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-04-15 17:35" pubdate>
+          2021年4月15日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          31 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">使用Plexdrive/Rclone+Google Drive搭建无限容量的Emby媒体库</h1>
+            
+            <div class="markdown-body">
+              
+              <p><strong>说明：</strong>一般我们玩<font color="#dd0000"><code>Plex</code></font>、<font color="#dd0000"><code>Emby</code></font>、<font color="#dd0000"><code>Jellyfin</code></font>这些媒体服务器的时候，都会考虑到硬盘大小的问题。如果考虑到成本的话，那就只能挂载无限网盘了，这里就建议用<code>Google Drive</code>，目前在土耳其区购买仅需50元。挂载方法的话可以用<code>Plexdrive</code>和<code>Rclone</code>。</p>
+<p><font color="#dd0000"><code>Plexdrive</code></font>是一个可以安装<code>Gdrive</code>应用的工具，看名字像是为<code>Plex</code>量身打造，其实其它应用也可以用，该工具可以直接从<code>Gdrive</code>读取媒体文件，专门争对媒体服务器优化，貌似是利用内存缓存原理，可以加快媒体访问并减少<code>API</code>的读取次数。但是需要比较大的内存。</p>
+<p><font color="#dd0000"><code>Rclone</code></font>是一个强大的网盘挂载工具，很久前博主就经常介绍，不过考虑到用途，之前的挂载参数肯定是需要调整下的，所以会在这里单独说下，该工具目前也有适合媒体服务器的缓存读取功能，但缓存很容易占用本地硬盘空间，所以这里博主就不用缓存功能了，主要使用的是分段读取，读取会快点，对于<code>API</code>来说，读取次数也会变的非常少。</p>
+<h5 id="两个工具的读取区别"><a href="#两个工具的读取区别" class="headerlink" title="两个工具的读取区别"></a>两个工具的读取区别</h5><p> <font color="#dd0000"><code>Plexdrive</code></font>：只能读取和删除</p>
+<p> <font color="#dd0000"><code>Rclone</code></font>：可以写入、读取和删除，但不能当硬盘直接写入，只能将文件移动进去</p>
+<p>这<code>2</code>个工具都需要安装<code>fuse</code>，可以提前装下，使用命令：</p>
+<div class="code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">Debian/Ubuntu系统</span>
+apt-get install fuse -y
+<span class="hljs-meta prompt_">#</span><span class="language-bash">CentOS系统</span>
+yum install fuse -y</code></pre></div>
+
+
+
+<h3 id="使用Plexdrive"><a href="#使用Plexdrive" class="headerlink" title="使用Plexdrive"></a>使用Plexdrive</h3><p><strong>Github地址：</strong><a target="_blank" rel="noopener" href="https://github.com/dweidenfeld/plexdrive">https://github.com/dweidenfeld/plexdrive</a></p>
+<p><strong>1、获取谷歌API凭据</strong></p>
+<p>获得自己的客户端<code>ID</code>和客户端密钥</p>
+<div class="code-wrapper"><pre><code class="hljs markdown">客户端 ID
+540168500500-<span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">**<span class="hljs-emphasis">*.apps.googleusercontent.com</span></span>
+<span class="hljs-emphasis"><span class="hljs-strong">客户端密钥</span></span>
+<span class="hljs-emphasis"><span class="hljs-strong">6k-*</span>**</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-emphasis">*</span>
+<span class="hljs-emphasis">创建日期</span>
+<span class="hljs-emphasis">2021年6月12日 GMT+8 下午4:21:03</span></code></pre></div>
+
+
+
+<p><strong>2、运行Plexdrive</strong></p>
+<p><code>Plexdrive</code>下载地址→<a target="_blank" rel="noopener" href="https://github.com/dweidenfeld/plexdrive/releases">传送门</a>，根据自己的架构选择对应的版本。</p>
+<div class="code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">下载最新的Plexdrive</span>
+wget https://github.com/dweidenfeld/plexdrive/releases/download/5.0.0/plexdrive-linux-amd64
+<span class="hljs-meta prompt_">#</span><span class="language-bash">移动并命名</span>
+mv plexdrive-linux-amd64 /usr/local/bin/plexdrive
+chmod +x /usr/local/bin/plexdrive
+<span class="hljs-meta prompt_">#</span><span class="language-bash">新建本地挂载目录</span>
+mkdir -p /home/gdrive
+<span class="hljs-meta prompt_">#</span><span class="language-bash">开始挂载</span>
+/usr/local/bin/plexdrive mount \
+ -c /root/.plexdrive \
+ -o allow_other \
+ -v 4 --refresh-interval=1m \
+ --chunk-check-threads=8 \
+ --chunk-load-threads=8 \
+ --chunk-load-ahead=4 \
+ --max-chunks=100 \
+ --drive-id=0ANsR2iUah42-Uk9PVA \
+ /home/gdrive</code></pre></div>
+
+<p>挂载参数可以参考→<a target="_blank" rel="noopener" href="https://github.com/dweidenfeld/plexdrive#usage">传送门</a>，可以根据你的需求自行调整以上参数。</p>
+<p>挂载后会要你输入客户端<code>ID</code>和密匙，然后打开获取到的链接绑定账号后，将自己获取到的<code>code</code>复制到<code>SSH</code>客户端确定即可。</p>
+<p>然后接下来<code>Plexdrive</code>将开始生成缓存，所以期间我们需要等几分钟。缓存完了后，你会看到<code>Gdrive</code>的文件已经同步到了本地挂载文件夹。</p>
+<p><strong>3、开机自启</strong></p>
+<p>这里使用<code>Systemctl</code>守护进程，只适用于<code>CentOS 7</code>、<code>Debian 8+</code>、<code>Ubuntu 16+</code>。</p>
+<div class="code-wrapper"><pre><code class="hljs shell">cat &gt; /etc/systemd/system/plexdrive.service &lt;&lt;EOF
+[Unit]
+Description=Plexdrive
+AssertPathIsDirectory=/home/gdrive
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/plexdrive mount \
+ -c /root/.plexdrive \
+ -o allow_other \
+ -v 4 --refresh-interval=1m \
+ --chunk-check-threads=8 \
+ --chunk-load-threads=8 \
+ --chunk-load-ahead=4 \
+ --max-chunks=100 \
+ --drive-id=0ANsR2iUah42-Uk9PVA \
+ /home/gdrive
+ExecStop=/bin/fusermount -u /home/gdrive
+Restart=on-abort
+
+[Install]
+WantedBy=default.target
+EOF</code></pre></div>
+
+<p>开始启动：</p>
+<div class="code-wrapper"><pre><code class="hljs shell">systemctl start plexdrive</code></pre></div>
+
+<p>设置开机自启：</p>
+<div class="code-wrapper"><pre><code class="hljs shell">systemctl enable plexdrive</code></pre></div>
+
+<p>其他命令：</p>
+<div class="code-wrapper"><pre><code class="hljs shell">重启：systemctl restart plexdrive
+停止：systemctl stop plexdrive
+状态：systemctl status plexdrive</code></pre></div>
+
+
+
+<h3 id="使用Rclone"><a href="#使用Rclone" class="headerlink" title="使用Rclone"></a>使用Rclone</h3><p><strong>1、配置Rclone</strong><br>使用和挂载<code>Google Drive</code>的方法可以参考博主以前发的教程→<a target="_blank" rel="noopener" href="https://www.moerats.com/archives/481/">传送门</a>，但只参考教程安装和配置即可，挂载就看本文。</p>
+<p><strong>2、挂载Gdrive</strong><br>挂载需要<code>3</code>个主要参数，这里很多人容易搞混，就详细的说下，比如开头的参数如下：</p>
+<div class="code-wrapper"><pre><code class="hljs shell">/usr/bin/rclone mount DriveName:Folder LocalFolder</code></pre></div>
+
+<p>参数解读：</p>
+<div class="code-wrapper"><pre><code class="hljs awk">DriveName为Rclone的配置名称，比如你配置rclone的时候，Name填的Rats
+Folder为网盘里的文件夹路径，如果你要挂载整个网盘，直接填/挂载整个根目录
+LocalFolder为本地服务器上的挂载文件夹，如果你需要将网盘的文件夹挂载到服务器上的<span class="hljs-regexp">/Drive文件夹，那就填/</span>Drive</code></pre></div>
+
+<p>博主目前针对媒体服务器测试了个比较不错的挂载参数，命令：</p>
+<div class="code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">记得修改DriveName:Folder和LocalFolder的值</span>
+/usr/bin/rclone mount DriveName:Folder LocalFolder \
+ --umask 0000 \
+ --default-permissions \
+ --allow-non-empty \
+ --allow-other \
+ --buffer-size 32M \
+ --dir-cache-time 12h \
+ --vfs-read-chunk-size 64M \
+ --vfs-read-chunk-size-limit 1G</code></pre></div>
+
+<p>更多参数可以查看→<a target="_blank" rel="noopener" href="https://tip.rclone.org/commands/rclone_mount/#chunked-reading">地址一</a>和<a target="_blank" rel="noopener" href="https://rclone.org/commands/rclone_config/">地址二</a>，如果你喜欢折腾的话，可以测试下，看还有不有更适合的参数，然后留个言。</p>
+<p><strong>3、开机自启</strong><br>这里和<code>Plexdrive</code>一样，同样使用<code>Systemctl</code>守护进程，也只适用于<code>CentOS 7</code>、<code>Debian 8+</code>、<code>Ubuntu 16+</code>。</p>
+<div class="code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">以下是一整条命令，先修改DriveName:Folder和LocalFolder的值，再一起复制到SSH客户端运行</span>
+cat &gt; /etc/systemd/system/rclone.service &lt;&lt;EOF
+[Unit]
+Description=Rclone
+AssertPathIsDirectory=LocalFolder
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/rclone mount DriveName:Folder LocalFolder \
+ --umask 0000 \
+ --default-permissions \
+ --allow-non-empty \
+ --allow-other \
+ --buffer-size 32M \
+ --dir-cache-time 12h \
+ --vfs-read-chunk-size 64M \
+ --vfs-read-chunk-size-limit 1G
+ExecStop=/bin/fusermount -u LocalFolder
+Restart=on-abort
+User=root
+
+[Install]
+WantedBy=default.target
+EOF</code></pre></div>
+
+<p>开始启动：</p>
+<div class="code-wrapper"><pre><code class="hljs shell">systemctl start rclone</code></pre></div>
+
+<p>设置开机自启：</p>
+<div class="code-wrapper"><pre><code class="hljs shell">systemctl enable rclone</code></pre></div>
+
+<p>其他命令：</p>
+<div class="code-wrapper"><pre><code class="hljs shell">重启：systemctl restart rclone
+停止：systemctl stop rclone
+状态：systemctl status rclone</code></pre></div>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>现在<code>Plexdrive</code>项目好像很少更新了，不过还能用；至于<code>Rclone</code>的话，更新频繁，功能也强，所以博主还是偏向于<code>Rclone</code>的，不过博主体验了下下，貌似<code>Plexdrive</code>加载什么的更快些，当然也不能肯定<code>Plexdrive</code>要快，毕竟也可能与其它因素有关，对于这<code>2</code>个工具的选择，可以都体验下，觉得哪个适合自己就用那个。</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%A8%B1%E4%B9%90/" class="category-chain-item">娱乐</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/emby/">#emby</a>
+      
+        <a href="/tags/%E7%BD%91%E7%9B%98%E6%8C%82%E8%BD%BD/">#网盘挂载</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>使用Plexdrive/Rclone+Google Drive搭建无限容量的Emby媒体库</div>
+      <div>http://blog.iwoov.com/2021/04/15/使用Plexdrive-Rclone-Google-Drive搭建无限容量的Emby媒体库/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Wu Yun</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年4月15日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/04/15/hello-world/" title="Hello World">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Hello World</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="twikoo"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/twikoo/1.4.17/twikoo.all.min.js', function() {
+        var options = Object.assign(
+          {"envId":"blof-conments-5gz2omvo6f39cb87","region":"ap-shanghai","path":"window.location.pathname"},
+          {
+            el: '#twikoo',
+            path: 'window.location.pathname',
+            onCommentLoaded: function() {
+              var imgSelector = '#twikoo .tk-content img:not(.tk-owo-emotion)';
+              Fluid.plugins.imageCaption(imgSelector);
+              Fluid.plugins.fancyBox(imgSelector);
+            }
+          }
+        )
+        twikoo.init(options)
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      京ICP证123456号
+    </a>
+  </span>
+  
+    
+      <span>
+        <a
+          href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=12345678"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="/img/police_beian.png" srcset="/img/loading.gif" lazyload alt="police-icon"/>
+          
+          <span>京公网安备12345678号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?d666fe54c57cd1795ad4590f056ec0e1";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
