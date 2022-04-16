@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://blog.iwoov.com/img/220415.jpg">
 <meta property="article:published_time" content="2021-04-15T09:35:34.000Z">
-<meta property="article:modified_time" content="2022-04-15T17:04:10.252Z">
+<meta property="article:modified_time" content="2022-04-16T01:43:32.447Z">
 <meta property="article:author" content="Wu Yun">
 <meta property="article:tag" content="Emby">
 <meta property="article:tag" content="网盘挂载*">
@@ -330,7 +330,7 @@ yum install fuse -y</code></pre></div>
 
 
 
-<h5 id="2、运行Plexdrive"><a href="#2、运行Plexdrive" class="headerlink" title="2、运行Plexdrive"></a><strong>2、运行Plexdrive</strong></h5><p><code>Plexdrive</code>下载地址→ <a target="_blank" rel="noopener" href="https://github.com/dweidenfeld/plexdrive/releases">传送门</a>，根据自己的架构选择对应的版本。</p>
+<h5 id="2、运行Plexdrive"><a href="#2、运行Plexdrive" class="headerlink" title="2、运行Plexdrive"></a><strong>2、运行Plexdrive</strong></h5><p><code>Plexdrive</code> <a target="_blank" rel="noopener" href="https://github.com/dweidenfeld/plexdrive/releases">下载地址</a>，根据自己的架构选择对应的版本。</p>
 <div class="code-wrapper"><pre><code class="hljs Bash"><span class="hljs-comment">#下载最新的Plexdrive</span>
 wget https://github.com/dweidenfeld/plexdrive/releases/download/5.0.0/plexdrive-linux-amd64
 <span class="hljs-comment">#移动并命名</span>
@@ -350,7 +350,7 @@ wget https://github.com/dweidenfeld/plexdrive/releases/download/5.0.0/plexdrive-
  --drive-id=0ANsR2iUah42-Uk9PVA \
  /home/gdrive</code></pre></div>
 
-<p>挂载参数可以参考→<a target="_blank" rel="noopener" href="https://github.com/dweidenfeld/plexdrive#usage">传送门</a>，可以根据你的需求自行调整以上参数。</p>
+<p>挂载参数可以参考 <a target="_blank" rel="noopener" href="https://github.com/dweidenfeld/plexdrive#usage">传送门</a>，可以根据你的需求自行调整以上参数。</p>
 <p>挂载后会要你输入客户端<code>ID</code>和密匙，然后打开获取到的链接绑定账号后，将自己获取到的<code>code</code>复制到<code>SSH</code>客户端确定即可。</p>
 <p>然后接下来<code>Plexdrive</code>将开始生成缓存，所以期间我们需要等几分钟。缓存完了后，你会看到<code>Gdrive</code>的文件已经同步到了本地挂载文件夹。</p>
 <h5 id="3、开机自启"><a href="#3、开机自启" class="headerlink" title="3、开机自启"></a><strong>3、开机自启</strong></h5><p>这里使用<code>Systemctl</code>守护进程，只适用于<code>CentOS 7</code>、<code>Debian 8+</code>、<code>Ubuntu 16+</code>。</p>
@@ -392,7 +392,7 @@ wget https://github.com/dweidenfeld/plexdrive/releases/download/5.0.0/plexdrive-
 
 
 
-<h3 id="使用Rclone"><a href="#使用Rclone" class="headerlink" title="使用Rclone"></a>使用Rclone</h3><h5 id="1、配置Rclone"><a href="#1、配置Rclone" class="headerlink" title="1、配置Rclone"></a><strong>1、配置Rclone</strong></h5><p>使用和挂载<code>Google Drive</code>的方法可以参考博主以前发的教程→ <a target="_blank" rel="noopener" href="https://www.moerats.com/archives/481/">传送门</a>，但只参考教程安装和配置即可，挂载就看本文。</p>
+<h3 id="使用Rclone"><a href="#使用Rclone" class="headerlink" title="使用Rclone"></a>使用Rclone</h3><h5 id="1、配置Rclone"><a href="#1、配置Rclone" class="headerlink" title="1、配置Rclone"></a><strong>1、配置Rclone</strong></h5><p>使用和挂载<code>Google Drive</code>的方法可以参考博主以前发的 <a target="_blank" rel="noopener" href="https://www.moerats.com/archives/481/">教程</a>，但只参考教程安装和配置即可，挂载就看本文。</p>
 <h5 id="2、挂载Gdrive"><a href="#2、挂载Gdrive" class="headerlink" title="2、挂载Gdrive"></a><strong>2、挂载Gdrive</strong></h5><p>挂载需要<code>3</code>个主要参数，这里很多人容易搞混，就详细的说下，比如开头的参数如下：</p>
 <div class="code-wrapper"><pre><code class="hljs Bash">/usr/bin/rclone mount DriveName:Folder LocalFolder</code></pre></div>
 
@@ -413,7 +413,7 @@ LocalFolder为本地服务器上的挂载文件夹，如果你需要将网盘的
  --vfs-read-chunk-size 64M \
  --vfs-read-chunk-size-limit 1G</code></pre></div>
 
-<p>更多参数可以查看→ <a target="_blank" rel="noopener" href="https://tip.rclone.org/commands/rclone_mount/#chunked-reading">地址一</a>和<a target="_blank" rel="noopener" href="https://rclone.org/commands/rclone_config/">地址二</a>，如果你喜欢折腾的话，可以测试下，看还有不有更适合的参数，然后留个言。</p>
+<p>更多参数可以查看 <a target="_blank" rel="noopener" href="https://tip.rclone.org/commands/rclone_mount/#chunked-reading">地址一</a>和<a target="_blank" rel="noopener" href="https://rclone.org/commands/rclone_config/">地址二</a>，如果你喜欢折腾的话，可以测试下，看还有不有更适合的参数，然后留个言。</p>
 <h5 id="3、开机自启-1"><a href="#3、开机自启-1" class="headerlink" title="3、开机自启"></a><strong>3、开机自启</strong></h5><p>这里和<code>Plexdrive</code>一样，同样使用<code>Systemctl</code>守护进程，也只适用于<code>CentOS 7</code>、<code>Debian 8+</code>、<code>Ubuntu 16+</code>。</p>
 <div class="code-wrapper"><pre><code class="hljs Bash"><span class="hljs-comment">#以下是一整条命令，先修改DriveName:Folder和LocalFolder的值，再一起复制到SSH客户端运行</span>
 <span class="hljs-built_in">cat</span> &gt; /etc/systemd/system/rclone.service &lt;&lt;<span class="hljs-string">EOF</span>
@@ -454,7 +454,7 @@ LocalFolder为本地服务器上的挂载文件夹，如果你需要将网盘的
 
 
 
-<h3 id="安装Emby"><a href="#安装Emby" class="headerlink" title="安装Emby"></a>安装Emby</h3><h5 id="1、下载Emby-Server"><a href="#1、下载Emby-Server" class="headerlink" title="1、下载Emby Server"></a>1、下载Emby Server</h5><p>安装<code>Emby Server</code>的服务器配置选择最好在2核4G内存以上。我选择白嫖<code>Azure</code>，200美元一个月试用。可以开一台<code>F4s</code>，配置为4核8G，Debian11系统。因为是白嫖服务器，每天做好备份。下载地址→ <a target="_blank" rel="noopener" href="https://emby.media/download.html">传送门</a></p>
+<h3 id="安装Emby"><a href="#安装Emby" class="headerlink" title="安装Emby"></a>安装Emby</h3><h5 id="1、下载Emby-Server"><a href="#1、下载Emby-Server" class="headerlink" title="1、下载Emby Server"></a>1、下载Emby Server</h5><p>安装<code>Emby Server</code>的服务器配置选择最好在2核4G内存以上。我选择白嫖<code>Azure</code>，200美元一个月试用。可以开一台<code>F4s</code>，配置为4核8G，Debian11系统。因为是白嫖服务器，每天做好备份。<strong>下载地址→ <a target="_blank" rel="noopener" href="https://emby.media/download.html">传送门</a></strong></p>
 <div class="code-wrapper"><pre><code class="hljs Bash">wget https://github.com/MediaBrowser/Emby.Releases/releases/download/4.6.7.0/emby-server-deb_4.6.7.0_amd64.deb</code></pre></div>
 
 
