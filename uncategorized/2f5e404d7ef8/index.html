@@ -25,10 +25,10 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://blog.iwoov.com/img/220415.jpg">
 <meta property="article:published_time" content="2021-04-15T09:35:34.000Z">
-<meta property="article:modified_time" content="2022-04-16T01:43:32.447Z">
+<meta property="article:modified_time" content="2022-04-16T02:04:57.383Z">
 <meta property="article:author" content="Wu Yun">
 <meta property="article:tag" content="Emby">
-<meta property="article:tag" content="网盘挂载*">
+<meta property="article:tag" content="网盘挂载">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://blog.iwoov.com/img/220415.jpg">
   
@@ -118,46 +118,6 @@
           
           
           
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
-                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="iconfont iconfont icon-rss"></i>
-                网站
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                
-                  
-                  
-                  
-                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://emby.iwoov.com/">
-                    
-                    我的Emby
-                  </a>
-                
-                  
-                  
-                  
-                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://cloud.iwoov.com/admin#/login/">
-                    
-                    我的机场
-                  </a>
-                
-                  
-                  
-                  
-                  <a class="dropdown-item" target="_blank" rel="noopener" href="https://monitor.iwoov.com/">
-                    
-                    我的服务器
-                  </a>
-                
-              </div>
-            </li>
-          
-        
-          
-          
-          
-          
             <li class="nav-item">
               <a class="nav-link" href="/archives/">
                 <i class="iconfont icon-archive-fill"></i>
@@ -198,6 +158,18 @@
               <a class="nav-link" href="/about/">
                 <i class="iconfont icon-user-fill"></i>
                 关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
               </a>
             </li>
           
@@ -330,7 +302,7 @@ yum install fuse -y</code></pre></div>
 
 
 
-<h5 id="2、运行Plexdrive"><a href="#2、运行Plexdrive" class="headerlink" title="2、运行Plexdrive"></a><strong>2、运行Plexdrive</strong></h5><p><code>Plexdrive</code> <a target="_blank" rel="noopener" href="https://github.com/dweidenfeld/plexdrive/releases">下载地址</a>，根据自己的架构选择对应的版本。</p>
+<h5 id="2、运行Plexdrive"><a href="#2、运行Plexdrive" class="headerlink" title="2、运行Plexdrive"></a><strong>2、运行Plexdrive</strong></h5><p><code>Plexdrive</code><a target="_blank" rel="noopener" href="https://github.com/dweidenfeld/plexdrive/releases">下载地址</a>，根据自己的架构选择对应的版本。</p>
 <div class="code-wrapper"><pre><code class="hljs Bash"><span class="hljs-comment">#下载最新的Plexdrive</span>
 wget https://github.com/dweidenfeld/plexdrive/releases/download/5.0.0/plexdrive-linux-amd64
 <span class="hljs-comment">#移动并命名</span>
@@ -350,7 +322,7 @@ wget https://github.com/dweidenfeld/plexdrive/releases/download/5.0.0/plexdrive-
  --drive-id=0ANsR2iUah42-Uk9PVA \
  /home/gdrive</code></pre></div>
 
-<p>挂载参数可以参考 <a target="_blank" rel="noopener" href="https://github.com/dweidenfeld/plexdrive#usage">传送门</a>，可以根据你的需求自行调整以上参数。</p>
+<p>挂载参数可以参考<a target="_blank" rel="noopener" href="https://github.com/dweidenfeld/plexdrive#usage">传送门</a>，可以根据你的需求自行调整以上参数。</p>
 <p>挂载后会要你输入客户端<code>ID</code>和密匙，然后打开获取到的链接绑定账号后，将自己获取到的<code>code</code>复制到<code>SSH</code>客户端确定即可。</p>
 <p>然后接下来<code>Plexdrive</code>将开始生成缓存，所以期间我们需要等几分钟。缓存完了后，你会看到<code>Gdrive</code>的文件已经同步到了本地挂载文件夹。</p>
 <h5 id="3、开机自启"><a href="#3、开机自启" class="headerlink" title="3、开机自启"></a><strong>3、开机自启</strong></h5><p>这里使用<code>Systemctl</code>守护进程，只适用于<code>CentOS 7</code>、<code>Debian 8+</code>、<code>Ubuntu 16+</code>。</p>
@@ -413,7 +385,7 @@ LocalFolder为本地服务器上的挂载文件夹，如果你需要将网盘的
  --vfs-read-chunk-size 64M \
  --vfs-read-chunk-size-limit 1G</code></pre></div>
 
-<p>更多参数可以查看 <a target="_blank" rel="noopener" href="https://tip.rclone.org/commands/rclone_mount/#chunked-reading">地址一</a>和<a target="_blank" rel="noopener" href="https://rclone.org/commands/rclone_config/">地址二</a>，如果你喜欢折腾的话，可以测试下，看还有不有更适合的参数，然后留个言。</p>
+<p>更多参数可以查看<a target="_blank" rel="noopener" href="https://tip.rclone.org/commands/rclone_mount/#chunked-reading">地址一</a>和<a target="_blank" rel="noopener" href="https://rclone.org/commands/rclone_config/">地址二</a>，如果你喜欢折腾的话，可以测试下，看还有不有更适合的参数，然后留个言。</p>
 <h5 id="3、开机自启-1"><a href="#3、开机自启-1" class="headerlink" title="3、开机自启"></a><strong>3、开机自启</strong></h5><p>这里和<code>Plexdrive</code>一样，同样使用<code>Systemctl</code>守护进程，也只适用于<code>CentOS 7</code>、<code>Debian 8+</code>、<code>Ubuntu 16+</code>。</p>
 <div class="code-wrapper"><pre><code class="hljs Bash"><span class="hljs-comment">#以下是一整条命令，先修改DriveName:Folder和LocalFolder的值，再一起复制到SSH客户端运行</span>
 <span class="hljs-built_in">cat</span> &gt; /etc/systemd/system/rclone.service &lt;&lt;<span class="hljs-string">EOF</span>
@@ -494,7 +466,7 @@ tar -zxvf /var/lib/emby_<span class="hljs-variable">$time</span>.tar.gz -C /var/
       
         <a href="/tags/Emby/">#Emby</a>
       
-        <a href="/tags/%E7%BD%91%E7%9B%98%E6%8C%82%E8%BD%BD/">#网盘挂载*</a>
+        <a href="/tags/%E7%BD%91%E7%9B%98%E6%8C%82%E8%BD%BD/">#网盘挂载</a>
       
     </div>
   
